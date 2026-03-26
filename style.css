@@ -4,11 +4,6 @@
     box-sizing: border-box;
 }
 
-html , body {
-    width: 100%;
-    height: 100%;
-}
-
 :root {
   --bg-primary:      #0C447C;
   --bg-card:         #B5D4F4;
@@ -19,3 +14,10 @@ html , body {
   --btn-correct-text:#EAF3DE;
   --btn-wrong-text:  #FAECE7;
 }
+
+html , body {
+    background-color: var(--bg-primary);
+    width: 100%;
+    height: 100%;
+}
+
