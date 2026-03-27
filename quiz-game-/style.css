@@ -1,0 +1,213 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* :root {
+  --bg-primary:      #0C447C;
+  --bg-card:         #B5D4F4;
+  --text-primary:    #E6F1FB;
+  --color-correct:   #639922;
+  --color-wrong:     #D85A30;
+  --color-score:     #FAC775;
+  --btn-correct-text:#EAF3DE;
+  --btn-wrong-text:  #FAECE7;
+} */
+
+html , body {
+   
+    width: 100%;
+    height: 100%;
+}
+
+/* :root {
+  --bg-primary:      #0C447C;
+  --bg-card:         #B5D4F4;
+  --text-primary:    #E6F1FB;
+  --color-correct:   #639922;
+  --color-wrong:     #D85A30;
+  --color-score:     #FAC775;
+  --btn-correct-text:#EAF3DE;
+  --btn-wrong-text:  #FAECE7;
+} */
+/* Reset default margins to prevent unwanted gaps */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#main {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f0f0f0; /* Light background for contrast */
+}
+
+#quiz {
+  display: flex;          /* This turns #quiz into a flex container */
+  justify-content: center; /* Centers horizontally */
+  align-items: center;     /* Centers vertically */
+  min-height: 100vh;
+  width: 100%;background-color:#3F4E4F;
+
+}
+
+#quiz .box {
+  width: 80%;             /* Desktop width */
+  max-width: 600px;       /* Keeps it from getting too wide on monitors */
+  height: 60vh;
+  background-color: #2C3639;
+  color: white;           /* So you can see your 'dddd' text */
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+ position: relative;
+
+  flex-direction: column;
+}
+.box .que{
+   border: 2px solid #A27B5C;
+   width: 100%;
+   text-align: center;
+   font-family: "Orbitron", sans-serif;
+}
+.clock{
+position: absolute;
+right: 3%;
+
+}
+button {
+  /* Variables */
+  --button_radius: 0.75em;
+  --button_color: #e8e8e8;
+  --button_outline_color: #000000;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--button_radius);
+  background: var(--button_outline_color);
+}
+
+.button_top {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--button_outline_color);
+  border-radius: var(--button_radius);
+  padding: 0.75em 1.5em;
+  background: var(--button_color);
+  color: var(--button_outline_color);
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+  margin: 5px;
+}
+
+button:hover .button_top {
+  /* Pull the button upwards when hovered */
+  transform: translateY(-0.33em);
+}
+
+button:active .button_top {
+  /* Push the button downwards when pressed */
+  transform: translateY(0);
+}
+/* From Uiverse.io by Z4drus */ 
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.button-3d {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  border-width: 0;
+  padding: 0 8px;
+  min-width: 4em;
+  min-height: 4em;
+  box-sizing: border-box;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 20px;
+}
+
+.button-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  padding: 8px 16px;
+  transform: translateY(0);
+  color: #fff;
+  background-image: linear-gradient(145deg, #6a11cb, #2575fc);
+  text-shadow: 0 -1px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  transition: transform 0.3s, border-radius 0.3s, background 10s;
+}
+
+.button-3d:active .button-top {
+  border-radius: 10px 10px 8px 8px / 8px;
+  transform: translateY(2px);
+  background-image: linear-gradient(145deg, #2575fc, #6a11cb);
+}
+
+.button-bottom {
+  position: absolute;
+  z-index: 1;
+  bottom: 4px;
+  left: 4px;
+  border-radius: 20px;
+  padding-top: 6px;
+  width: calc(100% - 8px);
+  height: calc(100% - 10px);
+  background-image: linear-gradient(145deg, #2575fc, #6a11cb);
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+  transition: border-radius 0.2s, padding-top 0.2s;
+}
+
+.button-base {
+  position: absolute;
+  z-index: 0;
+  top: 4px;
+  left: 0;
+  border-radius: 20px;
+  width: 100%;
+  height: calc(100% - 4px);
+  background-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 2px 2px rgba(0, 0, 0, 0.25);
+  transition: border-radius 0.2s, padding-top 0.2s;
+}
+
+.button-3d:active .button-bottom {
+  border-radius: 10px 10px 8px 8px / 8px;
+  padding-top: 0;
+}
+
+.button-3d:active .button-base {
+  border-radius: 10px 10px 8px 8px / 8px;
+}
+
+
+
+
+
+
+
+/* Mobile Adjustments */
+@media (max-width: 700px) {
+  #quiz {
+    background-color:#526D82; /* As per your original design */
+  }
+  
+  #quiz .box {
+    width: 90%;           /* Give it more room on small screens */
+    height: 70vh;
+    /* Removed margins entirely - Flexbox handles the centering! */
+  }
+}
