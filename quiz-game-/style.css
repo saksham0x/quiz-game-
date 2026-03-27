@@ -140,7 +140,11 @@ button:focus:not(:focus-visible) {
     overflow: hidden;
 }
 
-
+#quiz{
+    display: flex;
+    row-gap: 10px;
+    flex-direction: column;
+}
 #quiz .box {
     position: relative;
     width: 90%;
@@ -187,6 +191,7 @@ button:focus:not(:focus-visible) {
 }
 
 /* Question Area */
+
 .que {
     font-family: 'Orbitron', sans-serif;
     color: #DCD7C9;
