@@ -3,57 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Game</title>
+    <title>Premium Quiz Interface</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
-</style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="main">
-<div class="clock">
-    <h4>15:00</h4>
-</div>
+        <button class="back">
+  <span class="shadow"></span>
+  <span class="edge"></span>
+  <span class="front text"> back
+  </span>
+</button>
         <section id="quiz">
             <div class="box">
-                <h1 class="que">
-                    what is noun
-                </h1>
-                <button>
-  <span class="button_top"> Button </span>
-</button>
-<button>
-  <span class="button_top"> Button </span>
-</button>
-<button>
-  <span class="button_top"> Button </span>
-</button>
-<button>
-  <span class="button_top"> Button </span>
-</button>
- <div class="button-container">
-  <button class="button-3d">
-    <div class="button-top">
-      <span class="material-icons">❮</span>
-    </div>
-    <div class="button-bottom"></div>
-    <div class="button-base"></div>
-  </button>
-  <button class="button-3d">
-    <div class="button-top">
-      <span class="material-icons">❯</span>
-    </div>
-    <div class="button-bottom"></div>
-    <div class="button-base"></div>
-  </button>
-</div>
+                <div class="clock">
+                    <span class="timer-label">TIME LEFT</span>
+                    <h4 id="timerText">15:00</h4>
+                </div>
 
+                <div class="progress-container">
+                    <div class="progress-fill" style="width: 20%;"></div>
+                </div>
+
+                <h1 class="que">What is a Noun?</h1>
+
+                <div class="options-container">
+                    <button class="option-3d">
+                        <div class="option-base"></div>
+                        <div class="option-top">
+                            <span class="label">A</span>
+                            <span class="text">A person, place, or thing</span>
+                        </div>
+                    </button>
+
+                    <button class="option-3d">
+                        <div class="option-base"></div>
+                        <div class="option-top">
+                            <span class="label">B</span>
+                            <span class="text">An action word</span>
+                        </div>
+                    </button>
+
+                    <button class="option-3d">
+                        <div class="option-base"></div>
+                        <div class="option-top">
+                            <span class="label">C</span>
+                            <span class="text">Describes a verb</span>
+                        </div>
+                    </button>
+
+                    <button class="option-3d">
+                        <div class="option-base"></div>
+                        <div class="option-top">
+                            <span class="label">D</span>
+                            <span class="text">None of the above</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="nav-container">
+                    <button class="nav-btn-3d">
+                        <div class="nav-base"></div>
+                        <div class="nav-top">❮ PREV</div>
+                    </button>
+                    <button class="nav-btn-3d">
+                        <div class="nav-base"></div>
+                        <div class="nav-top">NEXT ❯</div>
+                    </button>
+                </div>
             </div>
-           
         </section>
     </div>
-    
-    
     <script src="script.js"></script>
 </body>
 </html>

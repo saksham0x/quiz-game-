@@ -32,182 +32,248 @@ html , body {
   --btn-wrong-text:  #FAECE7;
 } */
 /* Reset default margins to prevent unwanted gaps */
+/* Core Layout */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* From Uiverse.io by cssbuttons-io */ 
+.back{
+ position: absolute;
+ top: 2%;
+ right: 5%;
+ border: none;
+ background: transparent;
+ padding: 0;
+ cursor: pointer;
+ outline-offset: 4px;
+ transition: filter 250ms;
+ user-select: none;
+ touch-action: manipulation;
 }
 
+.shadow {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ border-radius: 12px;
+ background: hsl(0deg 0% 0% / 0.25);
+ will-change: transform;
+ transform: translateY(2px);
+ transition: transform
+    600ms
+    cubic-bezier(.3, .7, .4, 1);
+}
+
+.edge {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ border-radius: 12px;
+ background: linear-gradient(
+    to left,
+    hsl(340deg 100% 16%) 0%,
+    hsl(340deg 100% 32%) 8%,
+    hsl(340deg 100% 32%) 92%,
+    hsl(340deg 100% 16%) 100%
+  );
+}
+
+.front {
+ display: block;
+ position: relative;
+ padding: 12px 27px;
+ border-radius: 12px;
+ font-size: 1.1rem;
+ color: white;
+ background: hsl(345deg 100% 47%);
+ will-change: transform;
+ transform: translateY(-4px);
+ transition: transform
+    600ms
+    cubic-bezier(.3, .7, .4, 1);
+}
+
+button:hover {
+ filter: brightness(110%);
+}
+
+button:hover .front {
+ transform: translateY(-6px);
+ transition: transform
+    250ms
+    cubic-bezier(.3, .7, .4, 1.5);
+}
+
+button:active .front {
+ transform: translateY(-2px);
+ transition: transform 34ms;
+}
+
+button:hover .shadow {
+ transform: translateY(4px);
+ transition: transform
+    250ms
+    cubic-bezier(.3, .7, .4, 1.5);
+}
+
+button:active .shadow {
+ transform: translateY(1px);
+ transition: transform 34ms;
+}
+
+button:focus:not(:focus-visible) {
+ outline: none;
+}
 #main {
-  width: 100%;
-  min-height: 100vh;
-  background-color: #f0f0f0; /* Light background for contrast */
+    width: 100%;
+    min-height: 100vh;
+    background: radial-gradient(circle at top left, #2C3639, #050505);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
-#quiz {
-  display: flex;          /* This turns #quiz into a flex container */
-  justify-content: center; /* Centers horizontally */
-  align-items: center;     /* Centers vertically */
-  min-height: 100vh;
-  width: 100%;background-color:#3F4E4F;
-
-}
 
 #quiz .box {
-  width: 80%;             /* Desktop width */
-  max-width: 600px;       /* Keeps it from getting too wide on monitors */
-  height: 60vh;
-  background-color: #2C3639;
-  color: white;           /* So you can see your 'dddd' text */
-  padding: 20px;
-  border-radius: 12px;
-  display: flex;
- position: relative;
-
-  flex-direction: column;
-}
-.box .que{
-   border: 2px solid #A27B5C;
-   width: 100%;
-   text-align: center;
-   font-family: "Orbitron", sans-serif;
-}
-.clock{
-position: absolute;
-right: 3%;
-
-}
-button {
-  /* Variables */
-  --button_radius: 0.75em;
-  --button_color: #e8e8e8;
-  --button_outline_color: #000000;
-  font-size: 17px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  border-radius: var(--button_radius);
-  background: var(--button_outline_color);
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    background: rgba(44, 54, 57, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(162, 123, 92, 0.3);
+    border-radius: 28px;
+    padding: 50px 30px 30px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+   
 }
 
-.button_top {
-  display: block;
-  box-sizing: border-box;
-  border: 2px solid var(--button_outline_color);
-  border-radius: var(--button_radius);
-  padding: 0.75em 1.5em;
-  background: var(--button_color);
-  color: var(--button_outline_color);
-  transform: translateY(-0.2em);
-  transition: transform 0.1s ease;
-  margin: 5px;
+/* Timer Badge */
+.clock {
+    position: absolute;
+    top: -20px;
+    right: 30px;
+    background: #A27B5C;
+    padding: 8px 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(162, 123, 92, 0.3);
+}
+.timer-label { font-size: 0.6rem; color: #DCD7C9; display: block; letter-spacing: 1px; }
+.clock h4 { font-family: 'Orbitron', sans-serif; color: white; font-size: 1.1rem; }
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    background: #A27B5C;
+    box-shadow: 0 0 10px #A27B5C;
+    transition: width 0.4s ease;
 }
 
-button:hover .button_top {
-  /* Pull the button upwards when hovered */
-  transform: translateY(-0.33em);
+/* Question Area */
+.que {
+    font-family: 'Orbitron', sans-serif;
+    color: #DCD7C9;
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    line-height: 1.4;
+    text-align: center;
 }
 
-button:active .button_top {
-  /* Push the button downwards when pressed */
-  transform: translateY(0);
-}
-/* From Uiverse.io by Z4drus */ 
-.button-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px;
-}
+/* MCQ 3D Buttons */
+.options-container { display: flex; flex-direction: column; gap: 18px; }
 
-.button-3d {
-  -webkit-appearance: none;
-  appearance: none;
-  position: relative;
-  border-width: 0;
-  padding: 0 8px;
-  min-width: 4em;
-  min-height: 4em;
-  box-sizing: border-box;
-  background: transparent;
-  font: inherit;
-  cursor: pointer;
-  margin: 10px;
-  border-radius: 20px;
+.option-3d {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
 }
 
-.button-top {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 2;
-  padding: 8px 16px;
-  transform: translateY(0);
-  color: #fff;
-  background-image: linear-gradient(145deg, #6a11cb, #2575fc);
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-  transition: transform 0.3s, border-radius 0.3s, background 10s;
+.option-base {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 16px;
+    background: #1a1c1d;
+    transform: translateY(4px);
 }
 
-.button-3d:active .button-top {
-  border-radius: 10px 10px 8px 8px / 8px;
-  transform: translateY(2px);
-  background-image: linear-gradient(145deg, #2575fc, #6a11cb);
+.option-top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background: linear-gradient(145deg, #3F4E4F, #2C3639);
+    border: 1px solid rgba(162, 123, 92, 0.2);
+    border-radius: 16px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    transform: translateY(-4px);
+    transition: transform 0.1s ease, background 0.2s;
 }
 
-.button-bottom {
-  position: absolute;
-  z-index: 1;
-  bottom: 4px;
-  left: 4px;
-  border-radius: 20px;
-  padding-top: 6px;
-  width: calc(100% - 8px);
-  height: calc(100% - 10px);
-  background-image: linear-gradient(145deg, #2575fc, #6a11cb);
-  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
-  transition: border-radius 0.2s, padding-top 0.2s;
+.option-3d:hover .option-top { background: #394849; border-color: #A27B5C; }
+.option-3d:active .option-top { transform: translateY(0px); }
+.option-3d:active .option-base { transform: translateY(0px); }
+
+.label {
+    width: 32px; height: 32px;
+    background: rgba(162, 123, 92, 0.2);
+    border: 1px solid #A27B5C;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    color: #A27B5C;
 }
 
-.button-base {
-  position: absolute;
-  z-index: 0;
-  top: 4px;
-  left: 0;
-  border-radius: 20px;
-  width: 100%;
-  height: calc(100% - 4px);
-  background-color: rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.75),
-    inset 0 2px 2px rgba(0, 0, 0, 0.25);
-  transition: border-radius 0.2s, padding-top 0.2s;
+/* Navigation Buttons */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
 }
 
-.button-3d:active .button-bottom {
-  border-radius: 10px 10px 8px 8px / 8px;
-  padding-top: 0;
+.nav-btn-3d { position: relative; background: none; border: none; cursor: pointer; width: 48%; }
+.nav-base { position: absolute; top:0; left:0; width:100%; height:100%; border-radius:12px; background:#000; transform:translateY(3px); }
+.nav-top {
+    position: relative;
+    padding: 12px;
+    background: #A27B5C;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    transform: translateY(-3px);
+    transition: 0.1s;
 }
+.nav-btn-3d:active .nav-top { transform: translateY(0); }
 
-.button-3d:active .button-base {
-  border-radius: 10px 10px 8px 8px / 8px;
+/* Mobile */
+@media (max-width: 500px) {
+    #quiz .box { padding: 40px 20px 25px; }
+    .que { font-size: 1.1rem; }
+    #quiz{
+  margin-top: 15%;
 }
-
-
-
-
-
-
-
-/* Mobile Adjustments */
-@media (max-width: 700px) {
-  #quiz {
-    background-color:#526D82; /* As per your original design */
-  }
-  
-  #quiz .box {
-    width: 90%;           /* Give it more room on small screens */
-    height: 70vh;
-    /* Removed margins entirely - Flexbox handles the centering! */
-  }
 }
