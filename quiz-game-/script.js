@@ -1,4 +1,6 @@
 let quiz = document.querySelector("#quiz")
+let option3d = document.querySelectorAll(".option-3d")
+let effect = document.querySelector("#effect")
 
 let currentIndex = 0
 let totalsec = 15 * 60
@@ -28,7 +30,7 @@ async function getdata(){
   try {
     let res = await fetch("https://the-trivia-api.com/v2/questions")
     let data = await res.json()
-
+console.log(data)
     function getque(index){
 
       let item = data[index]
@@ -79,24 +81,62 @@ async function getdata(){
     getque(currentIndex)
 
     //  navigation
-    quiz.addEventListener("click",function(e){
+   quiz.addEventListener("click", function(e){
 
-      if(e.target.classList.contains("next")){
-        if(currentIndex < data.length - 1){
-          currentIndex++
-          getque(currentIndex)
-        }
-      }
+  // OPTION CLICK
+  let optionBtn = e.target.closest(".option-3d")
 
-      if(e.target.classList.contains("prev")){
-        if(currentIndex > 0){
-          currentIndex--
-          getque(currentIndex)
-        }
-      }
+  if(optionBtn){
+  let selected = optionBtn.querySelector(".text").innerText
 
-    })
+  let correct = data[currentIndex].correctAnswer
 
+  if(selected === correct){
+   // console.log("correct")
+  effect.innerText = "🎉"
+  effect.style.opacity = "1";
+    setTimeout(function(){
+ 
+     effect.style.opacity = "0";
+    },5000)
+
+     
+   
+  }
+  else{
+  //  console.log("wrong")
+    effect.innerText = "💀"
+    effect.style.opacity = "1";
+    setTimeout(function(){
+ 
+     effect.style.opacity = "0";
+    },5000)
+
+  }
+}
+
+  // NEXT
+  if(e.target.classList.contains("next")){
+    if(currentIndex < data.length - 1){
+      currentIndex++
+      getque(currentIndex)
+    }
+  }
+
+  // PREV
+  if(e.target.classList.contains("prev")){
+    if(currentIndex > 0){
+      currentIndex--
+      getque(currentIndex)
+    }
+  }
+
+})
+option3d.forEach((btn) => {
+  btn.addEventListener("click", function () {
+    console.log("hello");
+  });
+});
   } catch (err) {
     console.log("Error:", err)
   }
