@@ -90,6 +90,13 @@ console.log(data)
   let selected = optionBtn.querySelector(".text").innerText
 
   let correct = data[currentIndex].correctAnswer
+    let allOptions = document.querySelectorAll(".option-3d")
+
+  allOptions.forEach((btn) => {
+    btn.style.pointerEvents = "none"   // disable click
+    btn.style.opacity = "0.6"          // fade effect
+  })
+
 
   if(selected === correct){
    // console.log("correct")
@@ -130,6 +137,7 @@ console.log(data)
       getque(currentIndex)
     }
   }
+
 
 })
 option3d.forEach((btn) => {
