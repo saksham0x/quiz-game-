@@ -1,6 +1,7 @@
 let quiz = document.querySelector("#quiz")
 let option3d = document.querySelectorAll(".option-3d")
 let effect = document.querySelector("#effect")
+  var isans = [false,false,false,false,false,false,false,false,false,false]
 
 let currentIndex = 0
 let totalsec = 15 * 60
@@ -37,6 +38,7 @@ console.log(data)
 
       let options = [...item.incorrectAnswers, item.correctAnswer]
       options.sort(() => Math.random() - 0.5)
+  
 
       quiz.innerHTML= `
       <div class="box">
@@ -75,10 +77,21 @@ console.log(data)
           </div>
       </div>
       `
+
+          if(isans[currentIndex]=== true){
+        let allOptions = document.querySelectorAll(".option-3d")
+
+  allOptions.forEach((btn) => {//arrow function isley lgaye kyoki wo current ko disable krega next wale sheet ko nhi smjha
+    btn.style.pointerEvents = "none"   // disable click
+    btn.style.opacity = "0.6"          // fade effect
+  })
+
+      }
     }
 
     // first render
     getque(currentIndex)
+  
 
     //  navigation
    quiz.addEventListener("click", function(e){
@@ -86,34 +99,41 @@ console.log(data)
   // OPTION CLICK
   let optionBtn = e.target.closest(".option-3d")
 
-  if(optionBtn){
+if(isans[currentIndex] === false){
+ if(optionBtn){
   let selected = optionBtn.querySelector(".text").innerText
+   let select = optionBtn.querySelector(".text")
 
   let correct = data[currentIndex].correctAnswer
     let allOptions = document.querySelectorAll(".option-3d")
 
-  allOptions.forEach((btn) => {
+  allOptions.forEach((btn) => {//arrow function isley lgaye kyoki wo current ko disable krega next wale sheet ko nhi smjha
     btn.style.pointerEvents = "none"   // disable click
     btn.style.opacity = "0.6"          // fade effect
   })
 
 
   if(selected === correct){
+select.style.backgroundColor = "green";
+
    // console.log("correct")
   effect.innerText = "🎉"
   effect.style.opacity = "1";
+  isans[currentIndex] = true;
     setTimeout(function(){
  
      effect.style.opacity = "0";
-    },5000)
+    },3000)
 
      
    
   }
   else{
   //  console.log("wrong")
+  select.style.backgroundColor = "red";
     effect.innerText = "💀"
     effect.style.opacity = "1";
+     isans[currentIndex] = true;
     setTimeout(function(){
  
      effect.style.opacity = "0";
@@ -121,6 +141,9 @@ console.log(data)
 
   }
 }
+
+}
+ 
 
   // NEXT
   if(e.target.classList.contains("next")){

@@ -160,11 +160,12 @@ button:focus:not(:focus-visible) {
     display: flex;
     row-gap: 10px;
     flex-direction: column;
+    /* border: 3px solid white; */
 }
 #quiz .box {
     position: relative;
-    width: 90%;
-    max-width: 500px;
+    
+    width: 500px;
     background: rgba(44, 54, 57, 0.6);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(162, 123, 92, 0.3);
@@ -295,6 +296,9 @@ button:focus:not(:focus-visible) {
     #quiz .box { padding: 40px 20px 25px; }
     .que { font-size: 1.1rem; }
     #quiz{
-  margin-top: 15%;
+  margin-top: 25%;
+}
+#quiz .box{
+    width: 300px;
 }
 }
