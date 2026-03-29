@@ -7,7 +7,7 @@
 }
 
 :root {
-  --bg-primary:      #0C447C;
+  --bg-primary:      #0C447C;             
   --bg-card:         #B5D4F4;
   --text-primary:    #E6F1FB;
   --color-correct:   #639922;
@@ -739,9 +739,11 @@ button:hover .play {
 /* From Uiverse.io by cssbuttons-io */ 
 #main1{
 position: absolute;
+width: 100%;
 top: 0;
 left: 0;
     display: none;
+    z-index: 2000;
 }
 
 #effect {

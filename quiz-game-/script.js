@@ -1,7 +1,6 @@
 let quiz = document.querySelector("#quiz")
-let option3d = document.querySelectorAll(".option-3d")
 let effect = document.querySelector("#effect")
-  var isans = [false,false,false,false,false,false,false,false,false,false]
+var isans = [false,false,false,false,false,false,false,false,false,false]
 
 let currentIndex = 0
 let totalsec = 15 * 60
@@ -31,13 +30,14 @@ async function getdata(){
   try {
     let res = await fetch("https://the-trivia-api.com/v2/questions")
     let data = await res.json()
-console.log(data)
+    console.log(data)
+
     function getque(index){
 
       let item = data[index]
 
       let options = [...item.incorrectAnswers, item.correctAnswer]
-      options.sort(() => Math.random() - 0.5)
+      options.sort(() => 0.5 - Math.random()) // FIXED shuffle
   
 
       quiz.innerHTML= `
@@ -78,14 +78,13 @@ console.log(data)
       </div>
       `
 
-          if(isans[currentIndex]=== true){
+      if(isans[currentIndex]=== true){
         let allOptions = document.querySelectorAll(".option-3d")
 
-  allOptions.forEach((btn) => {//arrow function isley lgaye kyoki wo current ko disable krega next wale sheet ko nhi smjha
-    btn.style.pointerEvents = "none"   // disable click
-    btn.style.opacity = "0.6"          // fade effect
-  })
-
+        allOptions.forEach((btn) => {
+          btn.style.pointerEvents = "none"
+          btn.style.opacity = "0.6"
+        })
       }
     }
 
@@ -93,90 +92,85 @@ console.log(data)
     getque(currentIndex)
   
 
-    //  navigation
-   quiz.addEventListener("click", function(e){
+    // navigation + option click
+    quiz.addEventListener("click", function(e){
 
-  // OPTION CLICK
-  let optionBtn = e.target.closest(".option-3d")
+      let optionBtn = e.target.closest(".option-3d")
 
-if(isans[currentIndex] === false){
- if(optionBtn){
-  let selected = optionBtn.querySelector(".text").innerText
-   let select = optionBtn.querySelector(".text")
+      if(isans[currentIndex] === false){
+        if(optionBtn){
 
-  let correct = data[currentIndex].correctAnswer
-    let allOptions = document.querySelectorAll(".option-3d")
+          let selected = optionBtn.querySelector(".text").innerText.trim().toLowerCase()
+          let correct = data[currentIndex].correctAnswer.trim().toLowerCase()
 
-  allOptions.forEach((btn) => {//arrow function isley lgaye kyoki wo current ko disable krega next wale sheet ko nhi smjha
-    btn.style.pointerEvents = "none"   // disable click
-    btn.style.opacity = "0.6"          // fade effect
-  })
+          let allOptions = document.querySelectorAll(".option-3d")
 
+          allOptions.forEach((btn) => {
+            btn.style.pointerEvents = "none"
+            btn.style.opacity = "0.6"
+          })
 
-  if(selected === correct){
-select.style.backgroundColor = "green";
+          if(selected === correct){
+            optionBtn.querySelector(".option-top").style.backgroundColor = "green" // FIXED
 
-   // console.log("correct")
-  effect.innerText = "🎉"
-  effect.style.opacity = "1";
-  isans[currentIndex] = true;
-    setTimeout(function(){
- 
-     effect.style.opacity = "0";
-    },3000)
+            effect.innerText = "🎉"
+            effect.classList.add("show") // FIXED
 
-     
-   
-  }
-  else{
-  //  console.log("wrong")
-  select.style.backgroundColor = "red";
-    effect.innerText = "💀"
-    effect.style.opacity = "1";
-     isans[currentIndex] = true;
-    setTimeout(function(){
- 
-     effect.style.opacity = "0";
-    },5000)
+            isans[currentIndex] = true;
 
-  }
-}
+            setTimeout(function(){
+              effect.classList.remove("show")
+            },3000)
 
-}
- 
+          } else {
 
-  // NEXT
-  if(e.target.classList.contains("next")){
-    if(currentIndex < data.length - 1){
-      currentIndex++
-      getque(currentIndex)
-    }
-  }
+            optionBtn.querySelector(".option-top").style.backgroundColor = "red" // FIXED
 
-  // PREV
-  if(e.target.classList.contains("prev")){
-    if(currentIndex > 0){
-      currentIndex--
-      getque(currentIndex)
-    }
-  }
+            effect.innerText = "💀"
+            effect.classList.add("show") // FIXED
 
+            isans[currentIndex] = true;
 
-})
-option3d.forEach((btn) => {
-  btn.addEventListener("click", function () {
-    console.log("hello");
-  });
-});
+            setTimeout(function(){
+              effect.classList.remove("show")
+            },5000)
+          }
+        }
+      }
+
+      // NEXT
+      if(e.target.classList.contains("next")){
+        if(currentIndex < data.length - 1){
+          currentIndex++
+          getque(currentIndex)
+        }
+      }
+
+      // PREV
+      if(e.target.classList.contains("prev")){
+        if(currentIndex > 0){
+          currentIndex--
+          getque(currentIndex)
+        }
+      }
+
+    })
+
   } catch (err) {
     console.log("Error:", err)
   }
 }
 
 getdata()
-let main1 = document.querySelector("#main1")
-let play = document.querySelector(".home .play")
-play.addEventListener(function(){
-main1.style.display = "block"
-console.log("hello")
+
+let main1 = document.querySelector("#main1");
+let play = document.querySelector(".home .play-button");
+
+play.addEventListener("click", function() {
+  main1.style.display = "block";
+})
+
+let back = document.querySelector(".back")
+back.addEventListener("click",function(){
+  main1.style.display = "none";
 })
