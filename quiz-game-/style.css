@@ -1,9 +1,715 @@
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+:root {
+  --bg-primary:      #0C447C;
+  --bg-card:         #B5D4F4;
+  --text-primary:    #E6F1FB;
+  --color-correct:   #639922;
+  --color-wrong:     #D85A30;
+  --color-score:     #FAC775;
+  --btn-correct-text:#EAF3DE;
+  --btn-wrong-text:  #FAECE7;
+}
+
+html , body {
+    
+    width: 100%;
+    max-height: 100%;
+}
+.home{
+    background-color: var(--bg-primary);
+  width: 100%;
+  min-height: 100vh;
+}
+nav {
+    /* border: 1px solid black; */
+    /* overflow: hidden; */
+    flex-direction: row;
+    display: flex;
+    /* border: 1px solid black ; */
+    width: 100%;
+    min-height: 80px;
+    justify-content: space-around;
+    align-items: center;
+}
+.imagelogo {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    top: 30px;
+}
+
+nav img {
+    min-height: 80px;
+    /* max-width: 100%; */
+    /* border: 1px solid black; */
+}
+
+/* From Uiverse.io by pathikcomp */ 
+.main > .inp {
+  display: none;
+}
+.main {
+  font-weight: 800;
+  color: white;
+  background-color: #1E6FB9;
+  padding: 3px 15px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+  width: 12rem;
+  position: relative;
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.arrow {
+  height: 34%;
+  aspect-ratio: 1;
+  margin-block: auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.arrow::after,
+.arrow::before {
+  content: "";
+  position: absolute;
+  background-color: white;
+  height: 100%;
+  width: 2.5px;
+  border-radius: 500px;
+  transform-origin: bottom;
+}
+
+.arrow::after {
+  transform: rotate(35deg) translateX(-0.5px);
+}
+.arrow::before {
+  transform: rotate(-35deg) translateX(0.5px);
+}
+
+.main > .inp:checked + .arrow {
+  transform: rotateX(180deg);
+}
+
+.menu-container {
+  background-color: white;
+  color: #0C447C;
+  border-radius: 10px;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 130%;
+  overflow: hidden;
+  clip-path: inset(0% 0% 0% 0% round 10px);
+  transition: all 0.4s;
+}
+
+.menu-list {
+  --delay: 0.4s;
+  --trdelay: 0.15s;
+  padding: 8px 10px;
+  border-radius: inherit;
+  transition: background-color 0.2s 0s;
+  position: relative;
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+.menu-list::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 95%;
+}
+
+.menu-list:hover {
+  background-color: rgb(223, 223, 223);
+}
+
+.inp:checked ~ .menu-container {
+  clip-path: inset(10% 50% 90% 50% round 10px);
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(1) {
+  transition:
+    transform 0.4s var(--delay),
+    opacity 0.4s var(--delay);
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(2) {
+  transition:
+    transform 0.4s calc(var(--delay) + (var(--trdelay) * 1)),
+    opacity 0.4s calc(var(--delay) + (var(--trdelay) * 1));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(3) {
+  transition:
+    transform 0.4s calc(var(--delay) + (var(--trdelay) * 2)),
+    opacity 0.4s calc(var(--delay) + (var(--trdelay) * 2));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(4) {
+  transition:
+    transform 0.4s calc(var(--delay) + (var(--trdelay) * 3)),
+    opacity 0.4s calc(var(--delay) + (var(--trdelay) * 3));
+}
+
+.bar-inp {
+  -appearance: none;
+  display: none;
+  visibility: hidden;
+}
+
+.bar {
+  display: flex;
+  height: 50%;
+  width: 20px;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.bar-list {
+  --transform: -25%;
+  display: block;
+  width: 100%;
+  height: 3px;
+  border-radius: 50px;
+  background-color: white;
+  transition: all 0.4s;
+  position: relative;
+}
+
+.inp:not(:checked) ~ .bar > .top {
+  transform-origin: top right;
+  transform: translateY(var(--transform)) rotate(-45deg);
+}
+
+.inp:not(:checked) ~ .bar > .middle {
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+.inp:not(:checked) ~ .bar > .bottom {
+  transform-origin: bottom right;
+  transform: translateY(calc(var(--transform) * -1)) rotate(45deg);
+}
+
+.hero {
+    display: flex;
+    margin-top: 20px;
+    /* border: 1px solid black; */
+    width: 100%;
+    min-height: 500px;
+    
+}
+
+.left {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.left div {
+    /* border: 1px solid black; */
+    width: 70%;
+    height: 70%;
+    box-shadow: 10px 10px 20px black ;
+}
+.left div img {
+    width: 100%;
+    border-radius: 5px;
+    height: 100%;
+}
+.right {
+    height: 100%;
+    width: 50%;
+    
+    
+}
+
+
+.content {
+    /* border: 1px solid black; */
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    left: 100px;
+    bottom: 30px;
+}
+
+.head-tag h1 {
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+.contect {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.top {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-primary);
+}
+
+.down {
+    width: 100%;
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+    }
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100;
+    }
+    .imagelogo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .imagelogo img {
+        width: 80%;;
+    }
+    
+    .hero {
+        flex-direction: column; 
+    }
+    .left {
+        width: 100%;
+    }
+
+    .left div {
+        width: 85%;
+    }
+    .right {
+        width: 100%;
+    }
+
+    .content {
+        padding-top: 45px;
+        position: static;
+    }
+
+}
+
+
+/* *******************************************************************  */
+
+/* From Uiverse.io by barisdogansutcu */ 
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 10px;
+  color: white;
+  text-shadow: 2px 2px rgb(116, 116, 116);
+  text-transform: uppercase;
+  cursor: pointer;
+  border: solid 2px black;
+  letter-spacing: 1px;
+  font-weight: 600;
+  font-size: 17px;
+  background-color: hsl(49deg 98% 60%);
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+button:active {
+  transform: scale(0.9);
+  transition: all 100ms ease;
+}
+
+button svg {
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+
+.play {
+  transition: all 0.5s ease;
+  transition-delay: 300ms;
+}
+
+button:hover svg {
+  transform: scale(3) translate(50%);
+}
+
+.now {
+  position: absolute;
+  left: 0;
+  transform: translateX(-100%);
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+
+button:hover .now {
+  transform: translateX(10px);
+  transition-delay: 300ms;
+}
+
+button:hover .play {
+  transform: translateX(200%);
+  transition-delay: 300ms;
+}
+
+/* **************************************** Score button /*******************  */
+
+/* From Uiverse.io by gharsh11032000 */ 
+.animated-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 36px;
+  border: 4px solid;
+  border-color: transparent;
+  font-size: 16px;
+  background-color: inherit;
+  border-radius: 100px;
+  font-weight: 600;
+  color: greenyellow;
+  box-shadow: 0 0 0 2px greenyellow;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button svg {
+  position: absolute;
+  width: 24px;
+  fill: greenyellow;
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .arr-1 {
+  right: 16px;
+}
+
+.animated-button .arr-2 {
+  left: -25%;
+}
+
+.animated-button .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: greenyellow;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .text {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-12px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button:hover {
+  box-shadow: 0 0 0 12px transparent;
+  color: #212121;
+  border-radius: 12px;
+}
+
+.animated-button:hover .arr-1 {
+  right: -25%;
+}
+
+.animated-button:hover .arr-2 {
+  left: 16px;
+}
+
+.animated-button:hover .text {
+  transform: translateX(12px);
+}
+
+.animated-button:hover svg {
+  fill: #212121;
+}
+
+.animated-button:active {
+  scale: 0.95;
+  box-shadow: 0 0 0 4px greenyellow;
+}
+
+.animated-button:hover .circle {
+  width: 220px;
+  height: 220px;
+  opacity: 1;
+}
+
+
+/* ****************************** get btn ?  */
+
+/* From Uiverse.io by JkHuger */ 
+.sparkle-button {
+  --active: 0;
+  --bg: radial-gradient(
+			40% 50% at center 100%,
+			hsl(270 calc(var(--active) * 97%) 72% / var(--active)),
+			transparent
+		),
+		radial-gradient(
+			80% 100% at center 120%,
+			hsl(260 calc(var(--active) * 97%) 70% / var(--active)),
+			transparent
+		),
+		hsl(260 calc(var(--active) * 97%) calc((var(--active) * 44%) + 12%));
+  background: var(--bg);
+  font-size: 1.2rem;
+  font-weight: 500;
+  border: 0;
+  cursor: pointer;
+  padding: 1em 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  white-space: nowrap;
+  border-radius: 100px;
+  position: relative;
+  box-shadow: 0 0 calc(var(--active) * 3em) calc(var(--active) * 1em) hsl(260 97% 61% / 0.75),
+		0 0em 0 0 hsl(260 calc(var(--active) * 97%) calc((var(--active) * 50%) + 30%)) inset,
+		0 -0.05em 0 0 hsl(260 calc(var(--active) * 97%) calc(var(--active) * 60%)) inset;
+  transition: box-shadow var(--transition), scale var(--transition), background var(--transition);
+  scale: calc(1 + (var(--active) * 0.1));
+  transition: .3s;
+}
+
+.sparkle-button:active {
+  scale: 1;
+  transition: .3s;
+}
+
+.sparkle path {
+  color: hsl(0 0% calc((var(--active, 0) * 70%) + var(--base)));
+  transform-box: fill-box;
+  transform-origin: center;
+  fill: currentColor;
+  stroke: currentColor;
+  animation-delay: calc((var(--transition) * 1.5) + (var(--delay) * 1s));
+  animation-duration: 0.6s;
+  transition: color var(--transition);
+}
+
+.sparkle-button:is(:hover, :focus-visible) path {
+  animation-name: bounce;
+}
+
+@keyframes bounce {
+  35%, 65% {
+    scale: var(--scale);
+  }
+}
+
+.sparkle path:nth-of-type(1) {
+  --scale: 0.5;
+  --delay: 0.1;
+  --base: 40%;
+}
+
+.sparkle path:nth-of-type(2) {
+  --scale: 1.5;
+  --delay: 0.2;
+  --base: 20%;
+}
+
+.sparkle path:nth-of-type(3) {
+  --scale: 2.5;
+  --delay: 0.35;
+  --base: 30%;
+}
+
+.sparkle-button:before {
+  content: "";
+  position: absolute;
+  inset: -0.2em;
+  z-index: -1;
+  border: 0.25em solid hsl(260 97% 50% / 0.5);
+  border-radius: 100px;
+  opacity: var(--active, 0);
+  transition: opacity var(--transition);
+}
+
+.spark {
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  rotate: 0deg;
+  overflow: hidden;
+  mask: linear-gradient(white, transparent 50%);
+  animation: flip calc(var(--spark) * 2) infinite steps(2, end);
+}
+
+@keyframes flip {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.spark:before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  aspect-ratio: 1;
+  top: 0%;
+  left: 50%;
+  z-index: -1;
+  translate: -50% -15%;
+  rotate: 0;
+  transform: rotate(-90deg);
+  opacity: calc((var(--active)) + 0.4);
+  background: conic-gradient(
+		from 0deg,
+		transparent 0 340deg,
+		white 360deg
+	);
+  transition: opacity var(--transition);
+  animation: rotate var(--spark) linear infinite both;
+}
+
+.spark:after {
+  content: "";
+  position: absolute;
+  inset: var(--cut);
+  border-radius: 100px;
+}
+
+.backdrop {
+  position: absolute;
+  inset: var(--cut);
+  background: var(--bg);
+  border-radius: 100px;
+  transition: background var(--transition);
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+@supports(selector(:has(:is(+ *)))) {
+  body:has(button:is(:hover, :focus-visible)) {
+    --active: 1;
+    --play-state: running;
+  }
+
+  .bodydrop {
+    display: none;
+  }
+}
+
+.sparkle-button:is(:hover, :focus-visible) ~ :is(.bodydrop, .particle-pen) {
+  --active: 1;
+  --play-state: runnin;
+}
+
+.sparkle-button:is(:hover, :focus-visible) {
+  --active: 1;
+  --play-state: running;
+}
+
+.sp {
+  position: relative;
+}
+
+.particle-pen {
+  position: absolute;
+  width: 200%;
+  aspect-ratio: 1;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  mask: radial-gradient(white, transparent 65%);
+  z-index: -1;
+  opacity: var(--active, 0);
+  transition: opacity var(--transition);
+}
+
+.particle {
+  fill: white;
+  width: calc(var(--size, 0.25) * 1rem);
+  aspect-ratio: 1;
+  position: absolute;
+  top: calc(var(--y) * 1%);
+  left: calc(var(--x) * 1%);
+  opacity: var(--alpha, 1);
+  animation: float-out calc(var(--duration, 1) * 1s) calc(var(--delay) * -1s) infinite linear;
+  transform-origin: var(--origin-x, 1000%) var(--origin-y, 1000%);
+  z-index: -1;
+  animation-play-state: var(--play-state, paused);
+}
+
+.particle path {
+  fill: hsl(0 0% 90%);
+  stroke: none;
+}
+
+.particle:nth-of-type(even) {
+  animation-direction: reverse;
+}
+
+@keyframes float-out {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.text1 {
+  translate: 2% -6%;
+  letter-spacing: 0.01ch;
+  background: linear-gradient(90deg, hsl(0 0% calc((var(--active) * 100%) + 65%)), hsl(0 0% calc((var(--active) * 100%) + 26%)));
+  background-clip: text;
+  color: transparent;
+  transition: background var(--transition);
+}
+
+.sparkle-button svg {
+  inline-size: 1.25em;
+  translate: -25% -5%;
+}
 /* :root {
   --bg-primary:      #0C447C;
   --bg-card:         #B5D4F4;
@@ -15,11 +721,7 @@
   --btn-wrong-text:  #FAECE7;
 } */
 
-html , body {
-   
-    width: 100%;
-    height: 100%;
-}
+
 
 /* :root {
   --bg-primary:      #0C447C;
@@ -33,12 +735,15 @@ html , body {
 } */
 /* Reset default margins to prevent unwanted gaps */
 /* Core Layout */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;                   
-}
+
 /* From Uiverse.io by cssbuttons-io */ 
+#main1{
+position: absolute;
+top: 0;
+left: 0;
+    display: none;
+}
+
 #effect {
   position: fixed;
   top: 50%;

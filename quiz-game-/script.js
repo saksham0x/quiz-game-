@@ -174,3 +174,9 @@ option3d.forEach((btn) => {
 }
 
 getdata()
+let main1 = document.querySelector("#main1")
+let play = document.querySelector(".home .play")
+play.addEventListener(function(){
+main1.style.display = "block"
+console.log("hello")
+})
