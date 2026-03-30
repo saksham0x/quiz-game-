@@ -1,6 +1,10 @@
 let quiz = document.querySelector("#quiz")
 let effect = document.querySelector("#effect")
 var isans = [false,false,false,false,false,false,false,false,false,false]
+let total = 10
+
+let correct1 = 0
+let wrong = 0
 
 let currentIndex = 0
 let totalsec = 15 * 60
@@ -115,7 +119,7 @@ async function getdata(){
 
             effect.innerText = "🎉"
             effect.classList.add("show") // FIXED
-
+correct1 += 1 ;
             isans[currentIndex] = true;
 
             setTimeout(function(){
@@ -128,7 +132,7 @@ async function getdata(){
 
             effect.innerText = "💀"
             effect.classList.add("show") // FIXED
-
+wrong += 1
             isans[currentIndex] = true;
 
             setTimeout(function(){
@@ -172,5 +176,39 @@ play.addEventListener("click", function() {
 
 let back = document.querySelector(".back")
 back.addEventListener("click",function(){
+  getanalysis()
   main1.style.display = "none";
+})
+function getanalysis(){
+document.getElementById("total").innerText = total;
+document.getElementById("correct").innerText = correct1;
+document.getElementById("wrong").innerText = wrong;
+
+let ctx = document.getElementById("myChart").getContext("2d");
+
+let chart = new Chart(ctx, {
+  type: "doughnut", // ya "pie"
+  data: {
+    labels: ["Correct", "Wrong"],
+    datasets: [{
+      label: "Quiz Result",
+      data: [correct1, wrong], // yaha dynamic value aayegi
+      backgroundColor: ["green", "red"],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true
+  }
+});
+}
+let button = document.querySelector(".button")
+let getalys = document.querySelector(".get-alys")
+
+let giveanalysis = document.querySelector("#giveanalysis")
+getalys.addEventListener("click",function(){
+  giveanalysis.style.display = "block"
+})
+button.addEventListener("click",function(){
+giveanalysis.style.display = "none"
 })
