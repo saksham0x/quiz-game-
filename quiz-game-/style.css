@@ -1007,6 +1007,7 @@ button:focus:not(:focus-visible) {
    top: 0;
    left: 0;
    z-index: 2000;
+   color: antiquewhite;
 
 }
 /* From Uiverse.io by btongheng */ 

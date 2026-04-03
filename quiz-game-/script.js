@@ -3,6 +3,8 @@ let effect = document.querySelector("#effect")
 var isans = [false,false,false,false,false,false,false,false,false,false]
 let total = 10
 
+
+
 let correct1 = 0
 let wrong = 0
 
@@ -137,7 +139,7 @@ wrong += 1
 
             setTimeout(function(){
               effect.classList.remove("show")
-            },5000)
+            },3000)
           }
         }
       }
@@ -167,48 +169,104 @@ wrong += 1
 
 getdata()
 
+let isSubmitted = false;
+let flag = null ;
 let main1 = document.querySelector("#main1");
 let play = document.querySelector(".home .play-button");
 
 play.addEventListener("click", function() {
+  correct1 = 0;
+  wrong = 0;
+  currentIndex = 0;
+  isans = Array(10).fill(false);
+isSubmitted = false
   main1.style.display = "block";
 })
 
 let back = document.querySelector(".back")
 back.addEventListener("click",function(){
-  getanalysis()
+
+ 
   main1.style.display = "none";
 })
-function getanalysis(){
-document.getElementById("total").innerText = total;
-document.getElementById("correct").innerText = correct1;
-document.getElementById("wrong").innerText = wrong;
+function updateStreak(score){
+  let streak = JSON.parse(localStorage.getItem('mystreak')) || []
 
-let ctx = document.getElementById("myChart").getContext("2d");
+  streak.push(score)   // new day add
 
-let chart = new Chart(ctx, {
-  type: "doughnut", // ya "pie"
-  data: {
-    labels: ["Correct", "Wrong"],
-    datasets: [{
-      label: "Quiz Result",
-      data: [correct1, wrong], // yaha dynamic value aayegi
-      backgroundColor: ["green", "red"],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    responsive: true
+  if(streak.length > 10){
+    streak.shift()     // oldest remove
   }
-});
+
+  localStorage.setItem('mystreak', JSON.stringify(streak))
+
+  return streak
 }
+
+let doughnutChart;
+let barChart;
+
+function getanalysis(){
+
+  document.getElementById("total").innerText = total;
+  document.getElementById("correct").innerText = correct1;
+  document.getElementById("wrong").innerText = wrong;
+
+    let streak;
+
+  if(!isSubmitted){
+    streak = updateStreak(correct1)
+    isSubmitted = true
+  } else {
+    streak = JSON.parse(localStorage.getItem('mystreak')) || []
+  }
+
+  // destroy old charts
+  if(doughnutChart) doughnutChart.destroy()
+  if(barChart) barChart.destroy()
+
+  // Doughnut
+  let ctx = document.getElementById("myChart").getContext("2d");
+
+  doughnutChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["Correct", "Wrong"],
+      datasets: [{
+        data: [correct1, wrong],
+        backgroundColor: ["green", "red"]
+      }]
+    }
+  });
+
+  // Bar Graph (Dynamic labels)
+  let barCtx = document.getElementById("barChart").getContext("2d");
+
+  barChart = new Chart(barCtx, {
+    type: "bar",
+    data: {
+      labels: streak.map((_, i) => `Day ${i+1}`),
+      datasets: [{
+        label: "Daily Score",
+        data: streak,
+        backgroundColor: "green"
+      }]
+    }
+  });
+}
+
+
 let button = document.querySelector(".button")
 let getalys = document.querySelector(".get-alys")
 
 let giveanalysis = document.querySelector("#giveanalysis")
 getalys.addEventListener("click",function(){
+  
   giveanalysis.style.display = "block"
+  getanalysis()
 })
 button.addEventListener("click",function(){
 giveanalysis.style.display = "none"
 })
+
+
