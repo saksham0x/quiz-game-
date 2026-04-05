@@ -2,14 +2,50 @@ let quiz = document.querySelector("#quiz")
 let effect = document.querySelector("#effect")
 var isans = [false,false,false,false,false,false,false,false,false,false]
 let total = 10
-
-
-
-let correct1 = 0
-let wrong = 0
-
+let ar = 0
+let correct1 = [0,0]   
+let wrong = [0,0]     
+let totalsec = 15 * 60;
 let currentIndex = 0
-let totalsec = 15 * 60
+
+function gettime(){
+  const now = new Date();
+
+const hours = String(now.getHours()).padStart(2, '0');
+const minutes = String(now.getMinutes()).padStart(2, '0');
+const seconds = String(now.getSeconds()).padStart(2, '0');
+
+const customTime = `${hours}:${minutes}:${seconds}`;
+return customTime ;
+}
+
+function todayattempts() {
+  let today = new Date().toISOString().split('T')[0];
+
+  let data1 = JSON.parse(localStorage.getItem("update")) || {
+    date: today,
+    attempts: 0,
+    currenttime : 0 
+  };
+
+  if (data1.date !== today) {
+    data1.date = today;
+    data1.attempts = 0;
+    data1.currenttime = 0
+    correct1 = [0,0]
+    wrong = [0,0]
+  }
+
+  if (data1.attempts >= 2) {
+    alert("No attempts left for today");
+    ar = 0
+
+    return false;
+  }
+
+  localStorage.setItem("update", JSON.stringify(data1));
+  return true;
+}
 
 let timer = setInterval(function(){
 
@@ -43,7 +79,7 @@ async function getdata(){
       let item = data[index]
 
       let options = [...item.incorrectAnswers, item.correctAnswer]
-      options.sort(() => 0.5 - Math.random()) // FIXED shuffle
+      options.sort(() => 0.5 - Math.random())
   
 
       quiz.innerHTML= `
@@ -94,11 +130,8 @@ async function getdata(){
       }
     }
 
-    // first render
     getque(currentIndex)
-  
 
-    // navigation + option click
     quiz.addEventListener("click", function(e){
 
       let optionBtn = e.target.closest(".option-3d")
@@ -117,11 +150,13 @@ async function getdata(){
           })
 
           if(selected === correct){
-            optionBtn.querySelector(".option-top").style.backgroundColor = "green" // FIXED
+            optionBtn.querySelector(".option-top").style.backgroundColor = "green"
 
             effect.innerText = "🎉"
-            effect.classList.add("show") // FIXED
-correct1 += 1 ;
+            effect.classList.add("show")
+
+            correct1[ar] += 1;   
+
             isans[currentIndex] = true;
 
             setTimeout(function(){
@@ -130,11 +165,13 @@ correct1 += 1 ;
 
           } else {
 
-            optionBtn.querySelector(".option-top").style.backgroundColor = "red" // FIXED
+            optionBtn.querySelector(".option-top").style.backgroundColor = "red"
 
             effect.innerText = "💀"
-            effect.classList.add("show") // FIXED
-wrong += 1
+            effect.classList.add("show")
+
+            wrong[ar] += 1;   
+
             isans[currentIndex] = true;
 
             setTimeout(function(){
@@ -144,7 +181,6 @@ wrong += 1
         }
       }
 
-      // NEXT
       if(e.target.classList.contains("next")){
         if(currentIndex < data.length - 1){
           currentIndex++
@@ -152,7 +188,6 @@ wrong += 1
         }
       }
 
-      // PREV
       if(e.target.classList.contains("prev")){
         if(currentIndex > 0){
           currentIndex--
@@ -175,27 +210,53 @@ let main1 = document.querySelector("#main1");
 let play = document.querySelector(".home .play-button");
 
 play.addEventListener("click", function() {
-  correct1 = 0;
-  wrong = 0;
+let attemptchecker =  todayattempts()
+
+let checki = canplay()
+if(checki === false){
+  return ;
+}
+if(attemptchecker === false){
+  return ;
+}
+  // correct1 = [0,0];   
+  // wrong = [0,0];      
   currentIndex = 0;
   isans = Array(10).fill(false);
 isSubmitted = false
+
   main1.style.display = "block";
 })
 
 let back = document.querySelector(".back")
-back.addEventListener("click",function(){
+back.addEventListener("click", function () {
+  let today = new Date().toISOString().split('T')[0];
+  let time = gettime()
 
- 
+  let data1 = JSON.parse(localStorage.getItem("update")) || {
+    date: today,
+    attempts: 0
+  };
+
+  if (data1.date !== today) {
+    data1.date = today;
+    data1.attempts = 0;
+  }
+
+  data1.attempts++;
+data1.currenttime = getTimestamp()
+  localStorage.setItem("update", JSON.stringify(data1));
+
   main1.style.display = "none";
-})
+});
+
 function updateStreak(score){
   let streak = JSON.parse(localStorage.getItem('mystreak')) || []
 
-  streak.push(score)   // new day add
+  streak.push(score)
 
   if(streak.length > 10){
-    streak.shift()     // oldest remove
+    streak.shift()
   }
 
   localStorage.setItem('mystreak', JSON.stringify(streak))
@@ -209,23 +270,21 @@ let barChart;
 function getanalysis(){
 
   document.getElementById("total").innerText = total;
-  document.getElementById("correct").innerText = correct1;
-  document.getElementById("wrong").innerText = wrong;
+  document.getElementById("correct").innerText = correct1[ar]
+  document.getElementById("wrong").innerText = wrong[ar]
 
-    let streak;
+  let streak;
 
   if(!isSubmitted){
-    streak = updateStreak(correct1)
+    streak = updateStreak(Math.max(...correct1))
     isSubmitted = true
   } else {
     streak = JSON.parse(localStorage.getItem('mystreak')) || []
   }
 
-  // destroy old charts
   if(doughnutChart) doughnutChart.destroy()
   if(barChart) barChart.destroy()
 
-  // Doughnut
   let ctx = document.getElementById("myChart").getContext("2d");
 
   doughnutChart = new Chart(ctx, {
@@ -233,13 +292,12 @@ function getanalysis(){
     data: {
       labels: ["Correct", "Wrong"],
       datasets: [{
-        data: [correct1, wrong],
+        data: [correct1[ar], wrong[ar]], 
         backgroundColor: ["green", "red"]
       }]
     }
   });
 
-  // Bar Graph (Dynamic labels)
   let barCtx = document.getElementById("barChart").getContext("2d");
 
   barChart = new Chart(barCtx, {
@@ -255,6 +313,22 @@ function getanalysis(){
   });
 }
 
+function getTimestamp(){
+  return Date.now(); 
+}
+
+function canplay(){
+  let data1 = JSON.parse(localStorage.getItem("update")) || {}
+
+  let now = getTimestamp()
+
+  if(data1.currenttime && (now - data1.currenttime) < (6 * 60 * 60 * 1000)){
+    alert("Wait 6 hours before next attempt")
+    return false
+  }
+  ar = 1
+  return true
+}
 
 let button = document.querySelector(".button")
 let getalys = document.querySelector(".get-alys")
@@ -268,5 +342,3 @@ getalys.addEventListener("click",function(){
 button.addEventListener("click",function(){
 giveanalysis.style.display = "none"
 })
-
-
